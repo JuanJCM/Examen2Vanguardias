@@ -30,11 +30,11 @@ namespace Hotel.Rates.Api.Controllers
                 .ThenInclude(r => r.Room)
                 .First(r => r.Id == reservationModel.RatePlanId);
             var canReserve = ratePlan.Seasons
-                .Any(s => s.StartDate >= reservationModel.ReservationStart && s.EndDate <= reservationModel.ReservationEnd);
+                .Any(s => s.StartDate <= reservationModel.ReservationStart && s.EndDate >= reservationModel.ReservationEnd);
             var room = ratePlan.RatePlanRooms
                 .First(r => r.RoomId == reservationModel.RoomId && r.RatePlanId == reservationModel.RatePlanId);
             var isRoomAvailable = room.Room.Amount > 0 &&
-                room.Room.MaxAdults > reservationModel.AmountOfChildren &&
+                room.Room.MaxAdults >= reservationModel.AmountOfAdults &&
                 room.Room.MaxChildren <= reservationModel.AmountOfChildren;
 
             if (canReserve && isRoomAvailable)
