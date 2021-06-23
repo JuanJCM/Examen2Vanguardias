@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Hotel.Rates.Data.Repositories
 {
-    class RatePlanRepository : IRatePlanRepository
+    public class RatePlanRepository : IRatePlanRepository
     {
         InventoryContext _context;
         public RatePlanRepository(InventoryContext context)

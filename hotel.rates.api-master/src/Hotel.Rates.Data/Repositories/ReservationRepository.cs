@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Hotel.Rates.Data.Repositories
 {
-    class ReservationRepository 
+    public class ReservationRepository 
     {
 
     }
