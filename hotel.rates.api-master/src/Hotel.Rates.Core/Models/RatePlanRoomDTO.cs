@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hotel.Rates.Core
+namespace Hotel.Rates.Core.Models
 {
-    public class RatePlanRoom
+    public class RatePlanRoomDTO
     {
         public int RatePlanId { get; set; }
 

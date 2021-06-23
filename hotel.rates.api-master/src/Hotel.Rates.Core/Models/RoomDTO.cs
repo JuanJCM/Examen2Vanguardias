@@ -11,5 +11,6 @@ namespace Hotel.Rates.Core.Models
         public int MaxChildren { get; set; }
         public string Name { get; set; }
         public int Amount { get; set; }
+        public IEnumerable<RatePlanRoomDTO> RatePlanRoom { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hotel.Rates.Data
+namespace Hotel.Rates.Core
 {
     public class Room
     {

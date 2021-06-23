@@ -1,4 +1,5 @@
-﻿using Hotel.Rates.Data.Configurations;
+﻿using Hotel.Rates.Core;
+using Hotel.Rates.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
