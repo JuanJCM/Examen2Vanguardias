@@ -14,9 +14,9 @@ namespace Hotel.Rates.Api.Controllers
     public class RatePlansController : BaseApiController
     {
         private readonly InventoryContext _context;
-        private readonly IRatePlanService _rateplanService;
+        private readonly RatePlanService _rateplanService;
 
-        public RatePlansController(InventoryContext context, IRatePlanService ratePlanService)
+        public RatePlansController(InventoryContext context, RatePlanService ratePlanService)
         {
             _context = context;
             _rateplanService = ratePlanService;

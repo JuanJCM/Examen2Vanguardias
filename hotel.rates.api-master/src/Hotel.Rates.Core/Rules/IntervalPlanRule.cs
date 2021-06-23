@@ -12,9 +12,9 @@ namespace Hotel.Rates.Core.Rules
             return rateplan.RatePlanType == (int)RatePlanType.Interval;
         }
 
-        public override void ApplyRule(RatePlan rateplan, Season season, Room room)
+        protected override void ApplyRules(RatePlan rateplan, Season season, Room room)
         {
-            throw new NotImplementedException();
+            //aqui se aplicaria los cargos por dia
         }
     }
 }

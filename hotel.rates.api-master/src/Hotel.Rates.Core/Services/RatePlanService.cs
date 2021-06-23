@@ -8,10 +8,10 @@ using System.Linq;
 
 namespace Hotel.Rates.Core.Services
 {
-    public class IRatePlanService : IRatePlan
+    public class RatePlanService : IRatePlan
     {
         private readonly IRatePlanRepository _ratePlan;
-        public IRatePlanService(IRatePlanRepository rateplan)
+        public RatePlanService(IRatePlanRepository rateplan)
         {
             _ratePlan = rateplan;
         }
