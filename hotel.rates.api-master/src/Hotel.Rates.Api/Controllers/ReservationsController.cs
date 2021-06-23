@@ -1,4 +1,6 @@
 ﻿using Hotel.Rates.Api.Models;
+using Hotel.Rates.Core.Entities;
+using Hotel.Rates.Core.Interfaces;
 using Hotel.Rates.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,43 +13,30 @@ namespace Hotel.Rates.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ReservationsController : ControllerBase
+    public class ReservationsController : BaseApiController
     {
         private readonly InventoryContext _context;
+        private readonly ReservationService _reservation;
 
-        public ReservationsController(InventoryContext context)
+        public ReservationsController(InventoryContext context, ReservationService reservationService )
         {
             this._context = context;
+            _reservation = reservationService;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody]ReservationModel reservationModel)
         {
-            var ratePlan = _context
-                .NightlyRatePlans
-                .Include(r => r.Seasons)
-                .Include(r => r.RatePlanRooms)
-                .ThenInclude(r => r.Room)
-                .First(r => r.Id == reservationModel.RatePlanId);
-            var canReserve = ratePlan.Seasons
-                .Any(s => s.StartDate <= reservationModel.ReservationStart && s.EndDate >= reservationModel.ReservationEnd);
-            var room = ratePlan.RatePlanRooms
-                .First(r => r.RoomId == reservationModel.RoomId && r.RatePlanId == reservationModel.RatePlanId);
-            var isRoomAvailable = room.Room.Amount > 0 &&
-                room.Room.MaxAdults >= reservationModel.AmountOfAdults &&
-                room.Room.MaxChildren <= reservationModel.AmountOfChildren;
+            var result = _reservation.RegisterReservation(new ReservationModelDTO { 
+                RatePlanId = reservationModel.RatePlanId,
+                ReservationEnd = reservationModel.ReservationEnd,
+                ReservationStart = reservationModel.ReservationStart,
+                AmountOfAdults = reservationModel.AmountOfAdults,
+                AmountOfChildren = reservationModel.AmountOfChildren
+            });
+            return GetResult(result);
 
-            if (canReserve && isRoomAvailable)
-            {
-                room.Room.Amount -= 1;
-                _context.SaveChanges();
-                var days = (reservationModel.ReservationEnd - reservationModel.ReservationStart).TotalDays;
-                return Ok(new
-                {
-                    Price = days * ratePlan.Price
-                });
-            }
-            return BadRequest();
+            
         }
     }
 }
